@@ -12,6 +12,7 @@ public class CaveSystem {
 
     //attributes
     private HashMap<Integer, int[]> layoutMap = new HashMap<>();
+    
     public static int[] values1 = {2,5,8};
     public static int[] values2 = {1,3,10};
     public static int[] values3 = {2,4,12};
@@ -32,9 +33,18 @@ public class CaveSystem {
     public static int[] values18 = {9,17,19};
     public static int[] values19 = {11,18,20};
     public static int[] values20 = {13,16,19};
-
+    
     public static int[][] arrayLayout = {values1, values2, values3, values4, values5, values6, values7, values8, values9, values10, values11, values12, values13, values14, values15, values16, values17, values18, values19, values20};
     
+    //getters
+    public static int[][] getArrayLayout() {
+        return arrayLayout;
+    }
+    
+    public HashMap<Integer, int[]> getLayoutMap() {
+        return layoutMap;
+    }
+
     //Constructor
     public CaveSystem() {
         for (int i = 1; i <= arrayLayout.length; i++) {
