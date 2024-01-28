@@ -20,12 +20,13 @@ public class Cave {
     } 
     
     //Constructors
-    public Cave(int caveNum, boolean hasSuperBat, boolean hasArrow, boolean hasPit) {
+    public Cave(int caveNum) {
         
         this.caveNum = caveNum;
-        this.hasSuperBat = hasSuperBat;
-        this.hasArrow = hasArrow;
-        this.hasPit = hasPit;
+        this.hasSuperBat = false;
+        this.hasArrow = false;
+        this.hasPit = false;
+
     }
 
     
