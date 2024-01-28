@@ -1,6 +1,7 @@
 public class Cave {
     
     //attributes
+    public int caveNum;
     public boolean hasSuperBat;
     public boolean hasArrow;
     public boolean hasPit;
@@ -19,7 +20,9 @@ public class Cave {
     } 
     
     //Constructors
-    public Cave(boolean hasSuperBat, boolean hasArrow, boolean hasPit) {
+    public Cave(int caveNum, boolean hasSuperBat, boolean hasArrow, boolean hasPit) {
+        
+        this.caveNum = caveNum;
         this.hasSuperBat = hasSuperBat;
         this.hasArrow = hasArrow;
         this.hasPit = hasPit;
