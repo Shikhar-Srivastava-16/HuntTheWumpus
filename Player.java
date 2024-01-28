@@ -8,12 +8,17 @@ public class Player {
     public int getCaveNum() {
         return caveNum;
     }
+
     public void setCaveNum(int caveNum) {
-        this.caveNum = caveNum;
+        if (caveNum <= 20 || caveNum >= 1) {
+            this.caveNum = caveNum;
+        }
     }
+
     public int getQtyArrows() {
         return qtyArrows;
     }
+    
     public void setQtyArrows(int qtyArrows) {
         this.qtyArrows = qtyArrows;
     }
