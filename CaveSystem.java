@@ -47,7 +47,7 @@ public class CaveSystem {
     //Constructor
     public CaveSystem() {
         for (int i = 1; i <= arrayLayout.length; i++) {
-            layoutMap.put(new Cave(i), arrayLayout[i-1]);
+            layoutMap.put(i, arrayLayout[i-1]);
         }
     } 
 }
