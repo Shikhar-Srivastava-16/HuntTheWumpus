@@ -23,17 +23,7 @@ public class main {
         //generate location of Wumpus and Wumpus object (TBD)
     }
 
-    
 
-    public static boolean arrContains(int[] arr1, int numCheck) {
-    //returns true if the second argument is an element of the integer array passed as first array
-        for (int s : arr1) {
-            if (s == numCheck) {
-               return true;
-            }
-        }
-        return false;
-    }
 
     /*
      public static HashSet<Integer> generateSet(int sizeGiven) {
