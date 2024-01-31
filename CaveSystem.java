@@ -12,28 +12,27 @@ public class CaveSystem {
     //attributes
     private final HashMap<Integer, int[]> layoutMap = new HashMap<>();
     
-    private static int[] values1 = {2,5,8};
-    private static int[] values2 = {1,3,10};
-    private static int[] values3 = {2,4,12};
-    private static int[] values4 = {3,5,14};
-    private static int[] values5 = {1,4,6};
-    private static int[] values6 = {5,7,15};
-    private static int[] values7 = {6,8,17};
-    private static int[] values8 = {1,7,9};
-    private static int[] values9 = {8,10,18};
-    private static int[] values10 = {2,9,11};
-    private static int[] values11 = {10,12,19};
-    private static int[] values12 = {3,11,13};
-    private static int[] values13 = {12,14,20};
-    private static int[] values14 = {13,15,4};
-    private static int[] values15 = {6,14,16};
-    private static int[] values16 = {15,17,20};
-    private static int[] values17 = {16,18,7};
-    private static int[] values18 = {9,17,19};
-    private static int[] values19 = {11,18,20};
-    private static int[] values20 = {13,16,19};
-    
-    private static int[][] arrayLayout = {values1, values2, values3, values4, values5, values6, values7, values8, values9, values10, values11, values12, values13, values14, values15, values16, values17, values18, values19, values20};
+    private static int[][] arrayLayout = {
+        {2,5,8},
+        {1,3,10},
+        {2,4,12},
+        {3,5,14},
+        {1,4,6},
+        {5,7,15},
+        {6,8,17},
+        {1,7,9},
+        {8,10,18},
+        {2,9,11},
+        {10,12,19},
+        {3,11,13},
+        {12,14,20},
+        {13,15,4},
+        {6,14,16},
+        {16,18,7},
+        {9,17,19},
+        {11,18,20},
+        {13,16,19}
+        };
 
     /**Attributes:
      * caveLevel (currently unused) is an attribute used for difficulty: 0 for Easy, 1 for Hard, 2 for Nightmarish
