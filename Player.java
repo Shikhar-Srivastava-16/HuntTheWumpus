@@ -2,7 +2,10 @@ import java.util.*;
 
 public class Player {
     
-    //attributes
+    /**attributes
+     *caveNum is the current location, gets updated each round
+     *qtyArrows is the number of Arrows the player has
+     */
     private int caveNum;
     private int qtyArrows;
 
@@ -45,11 +48,12 @@ public class Player {
 
     public static boolean arrContains(int[] arr1, int numCheck) {
         //returns true if the second argument is an element of the integer array passed as first array
-            for (int s : arr1) {
-                if (s == numCheck) {
-                   return true;
-                }
+        for (int s : arr1) {
+            if (s == numCheck) {
+               return true;
             }
-            return false;
         }
+        return false;
+    }
+
 }
