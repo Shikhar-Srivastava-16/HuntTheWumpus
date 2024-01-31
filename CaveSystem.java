@@ -47,11 +47,16 @@ public class CaveSystem {
     private final HashSet arrowLocation;
     private final HashSet pitLocation;
     private final HashSet wumpLocation;
+    private final HashSet batLocation;
 
     
     //getters
     public HashSet getArrowLocation() {
         return arrowLocation;
+    }
+
+    public HashSet getBatLocation() {
+        return batLocation;
     }
 
     public HashSet getPitLocation() {
@@ -78,6 +83,7 @@ public class CaveSystem {
         this.caveLevel = caveLevel;
         this.arrowLocation = generateSet(5);
         this.pitLocation = generateSet(5);
+        this.batLocation = generateSet(5);
         this.wumpLocation = generateSet(1, this.pitLocation);
     }
 
@@ -105,5 +111,20 @@ public class CaveSystem {
             }
         }
         return set1;
+    }
+
+    public int generatePlayerCave(Random random) {
+
+        int returner = 0;
+        while (returner == 0) {
+            int num = 1 + random.nextInt(20);
+            if (!(getPitLocation().contains(num) 
+            || getArrowLocation().contains(num)
+            || getWumpLocation().contains(num))) {
+                returner = num;
+            }
+        }
+
+        return returner;
     }
 }
