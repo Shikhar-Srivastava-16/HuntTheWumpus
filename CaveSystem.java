@@ -94,4 +94,18 @@ public class CaveSystem {
         }
         return set1;
     }
+
+    //overloading generateSet
+    @overloading
+    public static HashSet<Integer> generateSet(int size, HashSet comparisonSet) {
+        Random numberGenerator = new Random();
+        HashSet<Integer> set1 = new HashSet<>();
+        while (set1.size() < sizeGiven) {
+            int numToAdd = 1 + numberGenerator.nextInt(20);
+            if (!comparisonSet.contains(numToAdd)) {
+                set1.add(numToAdd);
+            }
+        }
+        return set1;
+    }
 }
