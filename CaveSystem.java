@@ -35,6 +35,15 @@ public class CaveSystem {
     
     private static int[][] arrayLayout = {values1, values2, values3, values4, values5, values6, values7, values8, values9, values10, values11, values12, values13, values14, values15, values16, values17, values18, values19, values20};
 
+    /**Attributes:
+     * caveLevel (currently unused) is an attribute used for difficulty: 0 for Easy, 1 for Hard, 2 for Nightmarish
+     * arrowLocation is a Set, whose length is level dependent, which contains all cave numbers where an arrow can be picked up. 
+     *     -if the location of the player matches is in this set, the number of arrows is incremented by one
+     * pitLocation is a Set, whose length is level dependent, which contains locations of all pits.
+     *     -if the location of the player is here, they fall and lose
+     * wumpLocation is a Set, whose length is level dependent, which contains the locations of all wumpuses (wumpi...?)
+     *     if the players's location is here, they get eaten and lose. 
+     */
     private final int caveLevel;
     private final HashSet arrowLocation;
     private final HashSet pitLocation;
