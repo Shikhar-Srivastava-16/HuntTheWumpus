@@ -30,8 +30,10 @@ public class Player {
 
     //constructor
     public Player(int caveNum, int qtyArrows) {
+
         this.caveNum = caveNum;
         this.qtyArrows = qtyArrows;
+
     }
 
     //player movement
