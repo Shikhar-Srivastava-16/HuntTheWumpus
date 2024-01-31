@@ -38,9 +38,16 @@ public class Player {
 
     //player movement
     public void movePlayer(CaveSystem caveSystem, Scanner scan1) {
-        System.out.println("You can move to the following caves: " + caveSystem.getLayoutMap().get(caveNum));
+        
+        System.out.printf("You can move to the following caves: ");
+        for (int i : caveSystem.getLayoutMap().get(caveNum)) {
+            System.out.printf("%d ", i);
+        }
+        System.out.printf("\n");
+
         System.out.printf("Which Cave would you like to move to?: ");
         int varIntendedCave = scan1.nextInt();
+        
         if (arrContains(caveSystem.getLayoutMap().get(caveNum), varIntendedCave)) {
             caveNum = varIntendedCave;
         } else {
