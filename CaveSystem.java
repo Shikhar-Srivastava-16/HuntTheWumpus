@@ -79,7 +79,7 @@ public class CaveSystem {
         this.caveLevel = caveLevel;
         this.arrowLocation = generateSet(5);
         this.pitLocation = generateSet(5);
-        this.wumpLocation = generateSet(1);
+        this.wumpLocation = generateSet(1, this.pitLocation);
     }
 
     //methods
@@ -96,8 +96,7 @@ public class CaveSystem {
     }
 
     //overloading generateSet
-    @overloading
-    public static HashSet<Integer> generateSet(int size, HashSet comparisonSet) {
+    public static HashSet<Integer> generateSet(int sizeGiven, HashSet comparisonSet) {
         Random numberGenerator = new Random();
         HashSet<Integer> set1 = new HashSet<>();
         while (set1.size() < sizeGiven) {
