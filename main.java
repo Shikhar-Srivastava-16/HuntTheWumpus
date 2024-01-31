@@ -22,21 +22,4 @@ public class main {
 
         //generate location of Wumpus and Wumpus object (TBD)
     }
-
-
-
-    /*
-     public static HashSet<Integer> generateSet(int sizeGiven) {
-         
-         //generates a set of n unique numbers between 1 and 20
-         //used for pits and for arrow drops
-         
-         Random numberGenerator = new Random();
-         HashSet<Integer> set1 = new HashSet<>();
-         while (set1.size() < sizeGiven) {
-             set1.add(1 + numberGenerator.nextInt(20));
-         }
-         return set1;
-     }
-     */
 }
