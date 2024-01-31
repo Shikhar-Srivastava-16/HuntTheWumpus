@@ -38,8 +38,22 @@ public class CaveSystem {
     private final int caveLevel;
     private final HashSet arrowLocation;
     private final HashSet pitLocation;
+    private final HashSet wumpLocation;
+
     
     //getters
+    public HashSet getArrowLocation() {
+        return arrowLocation;
+    }
+
+    public HashSet getPitLocation() {
+        return pitLocation;
+    }
+
+    public HashSet getWumpLocation() {
+        return wumpLocation;
+    }
+
     public static int[][] getArrayLayout() {
         return arrayLayout;
     }
@@ -56,10 +70,11 @@ public class CaveSystem {
         this.caveLevel = caveLevel;
         this.arrowLocation = generateSet(5);
         this.pitLocation = generateSet(5);
+        this.wumpLocation = generateSet(1);
     }
 
-    public static HashSet<Integer> generateSet(int sizeGiven) {
-        
+    //methods
+    public static HashSet<Integer> generateSet(int sizeGiven) {  
         //generates a set of n unique numbers between 1 and 20
         //used for pits and for arrow drops
         
