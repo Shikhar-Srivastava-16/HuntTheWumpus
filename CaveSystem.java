@@ -42,6 +42,8 @@ public class CaveSystem {
      *     -if the location of the player is here, they fall and lose
      * wumpLocation is a Set, whose length is level dependent, which contains the locations of all wumpuses (wumpi...?)
      *     if the players's location is here, they get eaten and lose. 
+     * batLocation is a Set, whose length is level dependent, which stores all locations of bats in the game.
+     *     If a player lands on these tiles, they are carried away to a random empty cave.  
      */
     private final int caveLevel;
     private final HashSet arrowLocation;
@@ -126,5 +128,19 @@ public class CaveSystem {
         }
 
         return returner;
+    }
+
+    public HashSet getNearbyCaves(int caveNum) {
+        
+        HashSet<Integer> returnSet = new HashSet<>();
+        
+        for (int cave : layoutMap.get(caveNum)) {
+            returnSet.add(cave);
+            for (int cave2 : layoutMap.get(cave)) {
+                returnSet.add(cave2);
+            }
+        }                
+    
+        return returnSet;
     }
 }
