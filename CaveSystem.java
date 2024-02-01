@@ -137,11 +137,8 @@ public class CaveSystem {
         
         for (int cave : layoutMap.get(caveNum)) {
             returnSet.add(cave);
-            System.out.println(cave);
             for (int cave2 : layoutMap.get(cave)) {
                 returnSet.add(cave2);
-                System.out.println(cave2);
-
             }
         }                
     
