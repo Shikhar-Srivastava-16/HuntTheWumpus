@@ -28,6 +28,7 @@ public class CaveSystem {
         {12,14,20},
         {13,15,4},
         {6,14,16},
+        {15,17,20},
         {16,18,7},
         {9,17,19},
         {11,18,20},
@@ -130,17 +131,20 @@ public class CaveSystem {
         return returner;
     }
 
-    public HashSet getNearbyCaves(int caveNum) {
+    public HashSet<Integer> getNearbyCaves(int caveNum) {
         
         HashSet<Integer> returnSet = new HashSet<>();
         
         for (int cave : layoutMap.get(caveNum)) {
             returnSet.add(cave);
+            System.out.println(cave);
             for (int cave2 : layoutMap.get(cave)) {
                 returnSet.add(cave2);
+                System.out.println(cave2);
+
             }
         }                
     
         return returnSet;
     }
-}
+}   
