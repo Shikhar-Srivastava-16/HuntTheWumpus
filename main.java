@@ -56,11 +56,22 @@ public class main {
         for (int cave : nearbyCaves) {
             if (caveSystem.getWumpLocation().contains(cave)) {
                 System.out.println("smell");
-            } else if (caveSystem.getBatLocation().contains(cave)){
+                break;
+            } 
+        }
+        
+        for (int cave : nearbyCaves) {
+            if (caveSystem.getBatLocation().contains(cave)){
                 System.out.println("flap");
-            } else if (caveSystem.getPitLocation().contains(cave)) {
-                System.out.println("breeze");
+                break;
             }
         } 
+        
+        for (int cave : nearbyCaves) {
+            if (caveSystem.getPitLocation().contains(cave)) {
+                System.out.println("breeze");
+                break;
+            }
+        }
     }
 }
