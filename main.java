@@ -15,14 +15,30 @@ public class main {
         //Generate player
         int caveNum = caveSystem1.generatePlayerCave(randomiser);
         Player player = new Player(caveNum, 3);
+        //check for nearby cave/bat/wump.
+        checkForSenses(player.getCaveNum(), caveSystem1);
 
-        //Traversal
         while (true) {
-            player.movePlayer(caveSystem1, inputReader);
-            int playerLocation = player.getCaveNum();
-
-            checkForEvent(caveSystem1, playerLocation, player);
-            checkForSenses(playerLocation, caveSystem1);
+            //getting action from player
+            System.out.println("What do: move/shoot");
+            String action = inputReader.nextLine();
+            switch (action) {
+                case "move":
+                    //Traversal
+                    player.movePlayer(caveSystem1, inputReader);
+                    int playerLocation = player.getCaveNum();
+    
+                    checkForEvent(caveSystem1, playerLocation, player);
+                    checkForSenses(playerLocation, caveSystem1);   
+                    break;
+                case "shoot":
+                    shootWump(caveSystem1, player);
+                    System.out.println("shoot");
+                    break;
+                default:
+                    break;
+            }
+            
         }
     }
 
@@ -38,8 +54,8 @@ public class main {
             System.out.println("Bat.");
             //bat can drop you onto any empty square.
             player.setCaveNum(caveSystem1.generatePlayerCave(randomiser));
-            System.out.printf("new location: %d", player.getCaveNum());
             System.out.println("Now in cave " + player.getCaveNum());
+            checkForSenses(player.getCaveNum(), caveSystem1);
         }
 
         //check for arrow
@@ -73,5 +89,36 @@ public class main {
                 break;
             }
         }
+    }
+
+    public static void shootWump(CaveSystem caveSystem, Player player) {
+
+        System.out.printf("You can shoot into the caves: ");
+        for (int adjCave : caveSystem.getLayoutMap().get(player.getCaveNum())) {
+            System.out.printf("%d ", adjCave);
+        }
+
+        int caveShotAt = inputReader.nextInt();
+        if (caveSystem.wumpDeath(caveShotAt)) {
+            System.out.println("wump ded");
+            if (caveSystem.getWumpLocation().size() == 0) {
+                System.out.println("gaem end.");
+            } else {
+                System.out.printf("$d wump rem", caveSystem.getWumpLocation().size());
+            }
+            
+        } else {
+            System.out.println("wump no poke");
+            for (int cave : caveSystem.getNearbyCaves(caveShotAt)) {
+                if (caveSystem.getWumpLocation().contains(cave)) {
+                    System.out.println("wump move");
+                    caveSystem.moveWump(cave);
+                    break;
+                } 
+            }
+        }
+
+        System.out.printf("%d Arrows rem", player.getQtyArrows());
+
     }
 }
