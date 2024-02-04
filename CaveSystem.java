@@ -46,12 +46,13 @@ public class CaveSystem {
      * batLocation is a Set, whose length is level dependent, which stores all locations of bats in the game.
      *     If a player lands on these tiles, they are carried away to a random empty cave.  
      */
+
     private final int caveLevel;
     private final HashSet arrowLocation;
     private final HashSet pitLocation;
     private final HashSet wumpLocation;
     private final HashSet batLocation;
-
+    private static Random random = new Random();
     
     //getters
     public HashSet getArrowLocation() {
@@ -84,9 +85,42 @@ public class CaveSystem {
             layoutMap.put(i, arrayLayout[i-1]);
         }
         this.caveLevel = caveLevel;
+
+        int numOfArrows;
+        int numOfPits;
+        int numOfWumpi;
+        int numOfBats = 5
+
+        if (caveLevel == 0) {
+            
+            int numOfArrows = 5;
+            int numOfPits = 3;
+            int numOfWumpi = 1;
+
+        } else {
+
+            int numOfArrows = 3;
+            int numOfPits = 5;
+            int numOfWumpi = 2;
+        
+        }
+
+        this.arrowLocation = generateSet(numOfArrows);
+        this.pitLocation = generateSet(numOfPits);
+        this.wumpLocation = generateSet(numOfWumpi, this.pitLocation);
+        this.batLocation = generateSet(numOfBats, this.pitLocation);
+
+    }
+
+    //Overloaded constructor for default 
+    public CaveSystem() {
+        for (int i = 1; i <= arrayLayout.length; i++) {
+            layoutMap.put(i, arrayLayout[i-1]);
+        }
+        this.caveLevel = caveLevel;
         this.arrowLocation = generateSet(5);
         this.pitLocation = generateSet(5);
-        this.batLocation = generateSet(5);
+        this.batLocation = generateSet(5, this.pitLocation);
         this.wumpLocation = generateSet(1, this.pitLocation);
     }
 
@@ -143,5 +177,21 @@ public class CaveSystem {
         }                
     
         return returnSet;
+    }
+
+    public Boolean wumpDeath(int caveShotAt) {
+        if (wumpLocation.remove(caveShotAt)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void moveWump(int wumpusCave) {
+
+        wumpLocation.remove(wumpusCave);
+        wumpLocation.add(generatePlayerCave(random));
+
     }
 }   
