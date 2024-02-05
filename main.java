@@ -1,4 +1,7 @@
 import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class main {
     
@@ -8,9 +11,52 @@ public class main {
     private static Random randomiser = new Random();
 
     public static void main(String[] args) {
+        
+        //opening title window
+        JFrame titleWindow = new JFrame();
+        JLabel title = new JLabel("Hunt The Wumpus", SwingConstants.CENTER);
+        titleWindow.setSize(500, 500);
+        title.setLocation(500, 500);
+        titleWindow.add(title);
+        titleWindow.setVisible(true);
 
+        int level = 0;
+        JButton buttonE = new JButton("Easy");                //caveLevel = 0
+        JButton buttonH = new JButton("Hard");                //caveLevel = 1
+        JButton buttonN = new JButton("Nightmare");           //caveLevel = 2
+        
+        buttonE.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                level = 0;
+            }
+            
+        });
+
+        buttonH.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                level = 1;
+            }
+            
+        });
+
+        buttonN.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                level = 2;
+            }
+            
+        });
+
+        //level select
+        //System.out.printf("Enter level (0,1,2): ");
+        //int level = inputReader.nextInt();
+        
         //Generating map:
-        CaveSystem caveSystem1 = new CaveSystem(1);
+        CaveSystem caveSystem1 = new CaveSystem(level);
+        
+        //starting message for blind player
 
         //Generate player
         int caveNum = caveSystem1.generatePlayerCave(randomiser);
@@ -36,6 +82,7 @@ public class main {
                     System.out.println("shoot");
                     break;
                 default:
+                    System.out.println("Invalid input, try again.");
                     break;
             }
             
@@ -121,4 +168,5 @@ public class main {
         System.out.printf("%d Arrows rem", player.getQtyArrows());
 
     }
+    
 }
