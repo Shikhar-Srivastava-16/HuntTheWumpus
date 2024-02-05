@@ -33,7 +33,7 @@ public class CaveSystem {
         {9,17,19},
         {11,18,20},
         {13,16,19}
-        };
+    };
 
     /**Attributes:
      * caveLevel (currently unused) is an attribute used for difficulty: 0 for Easy, 1 for Hard, 2 for Nightmarish
