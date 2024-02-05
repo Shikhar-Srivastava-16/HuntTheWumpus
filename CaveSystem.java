@@ -89,19 +89,19 @@ public class CaveSystem {
         int numOfArrows;
         int numOfPits;
         int numOfWumpi;
-        int numOfBats = 5
+        int numOfBats = 5;
 
         if (caveLevel == 0) {
             
-            int numOfArrows = 5;
-            int numOfPits = 3;
-            int numOfWumpi = 1;
+            numOfArrows = 5;
+            numOfPits = 3;
+            numOfWumpi = 1;
 
         } else {
 
-            int numOfArrows = 3;
-            int numOfPits = 5;
-            int numOfWumpi = 2;
+            numOfArrows = 3;
+            numOfPits = 5;
+            numOfWumpi = 2;
         
         }
 
@@ -117,7 +117,7 @@ public class CaveSystem {
         for (int i = 1; i <= arrayLayout.length; i++) {
             layoutMap.put(i, arrayLayout[i-1]);
         }
-        this.caveLevel = caveLevel;
+        this.caveLevel = 0;
         this.arrowLocation = generateSet(5);
         this.pitLocation = generateSet(5);
         this.batLocation = generateSet(5, this.pitLocation);
