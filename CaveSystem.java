@@ -48,13 +48,17 @@ public class CaveSystem {
      */
 
     private final int caveLevel;
-    private final HashSet arrowLocation;
-    private final HashSet pitLocation;
-    private final HashSet wumpLocation;
-    private final HashSet batLocation;
-    private static Random random = new Random();
+    private HashSet arrowLocation;
+    private HashSet pitLocation;
+    private HashSet wumpLocation;
+    private HashSet batLocation;
+    private Random random = new Random();
     
     //getters
+    public int getCaveLevel() {
+        return caveLevel;
+    }
+
     public HashSet getArrowLocation() {
         return arrowLocation;
     }
@@ -81,6 +85,12 @@ public class CaveSystem {
 
     //Constructor
     public CaveSystem(int caveLevel) {
+
+        if (caveLevel < 0 || caveLevel > 2 ) {
+            System.err.println("Invalid level");
+            System.exit(1);
+        }
+
         for (int i = 1; i <= arrayLayout.length; i++) {
             layoutMap.put(i, arrayLayout[i-1]);
         }
@@ -110,18 +120,6 @@ public class CaveSystem {
         this.wumpLocation = generateSet(numOfWumpi, this.pitLocation);
         this.batLocation = generateSet(numOfBats, this.pitLocation);
 
-    }
-
-    //Overloaded constructor for default 
-    public CaveSystem() {
-        for (int i = 1; i <= arrayLayout.length; i++) {
-            layoutMap.put(i, arrayLayout[i-1]);
-        }
-        this.caveLevel = 0;
-        this.arrowLocation = generateSet(5);
-        this.pitLocation = generateSet(5);
-        this.batLocation = generateSet(5, this.pitLocation);
-        this.wumpLocation = generateSet(1, this.pitLocation);
     }
 
     //methods
