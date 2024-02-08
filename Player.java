@@ -64,4 +64,37 @@ public class Player {
         }
         return false;
     }
+
+    public void shootWump(CaveSystem caveSystem, Scanner inputReader) {
+
+        qtyArrows--;
+
+        System.out.printf("You can shoot into the caves: ");
+        for (int adjCave : caveSystem.getLayoutMap().get(caveNum)) {
+            System.out.printf("%d ", adjCave);
+        }
+
+        int caveShotAt = inputReader.nextInt();
+        if (caveSystem.wumpDeath(caveShotAt)) {
+            System.out.println("wump ded");
+            if (caveSystem.getWumpLocation().size() == 0) {
+                System.out.println("gaem end.");
+            } else {
+                System.out.printf("$d wump rem", caveSystem.getWumpLocation().size());
+            }
+            
+        } else {
+            System.out.println("wump no poke");
+            for (int cave : caveSystem.getNearbyCaves(caveShotAt)) {
+                if (caveSystem.getWumpLocation().contains(cave)) {
+                    System.out.println("wump move");
+                    caveSystem.moveWump(cave);
+                    break;
+                } 
+            }
+        }
+
+        System.out.printf("%d Arrows rem", qtyArrows);
+
+    }
 }
