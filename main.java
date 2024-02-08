@@ -9,164 +9,203 @@ public class main {
     private static Scanner inputReader = new Scanner(System.in);
     //Randomiser
     private static Random randomiser = new Random();
+    
+    //Game elements
+    private static CaveSystem caveSystem1;
+    private static Player player;
 
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) throws InterruptedException {
+                
         //opening title window
+        JPanel panel = new JPanel();
         JFrame titleWindow = new JFrame();
-        JLabel title = new JLabel("Hunt The Wumpus", SwingConstants.CENTER);
+        titleWindow.setLayout(null);
+        titleWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         titleWindow.setSize(500, 500);
+        
+        //adding title
+        JLabel title = new JLabel("Hunt The Wumpus", SwingConstants.CENTER);
         title.setLocation(500, 500);
-        titleWindow.add(title);
+        panel.add(title);
+        
+        //caveLevel = 0
+        JButton buttonE = new JButton("Easy");                
+        buttonE.setLocation(50,20);
+        panel.add(buttonE);
+        
+        //caveLevel = 1
+        JButton buttonH = new JButton("Hard");                
+        panel.add(buttonH);
+        buttonE.setLocation(50,40);
+        
+        //caveLevel = 2
+        JButton buttonN = new JButton("Nightmare");           
+        buttonE.setLocation(50,60);
+        panel.add(buttonN);
+        
+        titleWindow.setContentPane(panel);
         titleWindow.setVisible(true);
-
-        int level = 0;
-        JButton buttonE = new JButton("Easy");                //caveLevel = 0
-        JButton buttonH = new JButton("Hard");                //caveLevel = 1
-        JButton buttonN = new JButton("Nightmare");           //caveLevel = 2
         
-        buttonE.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                level = 0;
-            }
-            
-        });
-
-        buttonH.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                level = 1;
-            }
-            
-        });
-
-        buttonN.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                level = 2;
-            }
-            
-        });
-
-        //level select
-        //System.out.printf("Enter level (0,1,2): ");
-        //int level = inputReader.nextInt();
-        
-        //Generating map:
-        CaveSystem caveSystem1 = new CaveSystem(level);
-        
-        //starting message for blind player
+        buttonListener(buttonE, buttonH, buttonN);
 
         //Generate player
-        int caveNum = caveSystem1.generatePlayerCave(randomiser);
-        Player player = new Player(caveNum, 3);
-        //check for nearby cave/bat/wump.
-        checkForSenses(player.getCaveNum(), caveSystem1);
-
         while (true) {
-            //getting action from player
-            System.out.println("What do: move/shoot");
-            String action = inputReader.nextLine();
-            switch (action) {
-                case "move":
-                    //Traversal
-                    player.movePlayer(caveSystem1, inputReader);
-                    int playerLocation = player.getCaveNum();
-    
-                    checkForEvent(caveSystem1, playerLocation, player);
-                    checkForSenses(playerLocation, caveSystem1);   
-                    break;
-                case "shoot":
-                    shootWump(caveSystem1, player);
-                    System.out.println("shoot");
-                    break;
-                default:
-                    System.out.println("Invalid input, try again.");
-                    break;
+            System.out.println("WHILE");
+            int caveNum;
+            try {
+                caveNum = caveSystem1.generatePlayerCave(randomiser);
+                System.out.println("trying");
+                player = new Player(caveNum, 3);
+                break;
+            } catch (Exception e) {
+                System.out.println("SLEEPING");
+                Thread.sleep(500);
+                continue;
             }
+        }
+
+        //check for nearby cave/bat/wump.
+        if (caveSystem1.getCaveLevel() == 2) {
+            System.out.println(checkForSenses(player.getCaveNum(), caveSystem1));
+            titleWindow.dispose();
+        } else {
             
         }
     }
-
-    public static void checkForEvent(CaveSystem caveSystem1, int playerLocation, Player player) {
-
+    
+    public static Event checkForEvent(CaveSystem caveSystem1, Player player) {
+        
+        int playerLocation = player.getCaveNum();
         if (caveSystem1.getPitLocation().contains(playerLocation)) {
-            System.out.println("Falls.");
-            System.exit(0);
-        }
+            return (Event.FALL);
 
-        //check for Bat
-        if (caveSystem1.getBatLocation().contains(playerLocation)) {
-            System.out.println("Bat.");
-            //bat can drop you onto any empty square.
-            player.setCaveNum(caveSystem1.generatePlayerCave(randomiser));
-            System.out.println("Now in cave " + player.getCaveNum());
-            checkForSenses(player.getCaveNum(), caveSystem1);
-        }
+        } else if (caveSystem1.getBatLocation().contains(playerLocation)) {
+            //check for Bat
+            return (Event.BAT);
 
-        //check for arrow
-        if (caveSystem1.getArrowLocation().contains(playerLocation)) {
-            System.out.println("pokey stick.");
-            int currentArrows = player.getQtyArrows();
-            player.setQtyArrows(currentArrows++);
+        } else if (caveSystem1.getArrowLocation().contains(playerLocation)) {
+            //check for arrow
+            return Event.ARROW;
+        } else if (caveSystem1.getWumpLocation().contains(playerLocation)) {
+            //check for wump
+            return Event.WUMPUS;
+        }
+        else {
+            return Event.NONE;
         }
     }
 
-    public static void checkForSenses(int caveNum, CaveSystem caveSystem) {
+    public static void doEvent (Player player) {
+        Event event = checkForEvent(caveSystem1, player);
+        switch (event) {
+            case ARROW:
+                System.out.println("You find a bundle of arrows! You decide to take one.");
+                int currentArrows = player.getQtyArrows();
+                player.setQtyArrows(currentArrows++);
+                System.out.printf("Now you have %d Arrows in your quiver.", player.getQtyArrows());
+                break;
 
+            case BAT:
+                //bat can drop you onto any empty square.
+                System.out.println("As you enter the cave, the sound of flapping wings grows louder. You find yourself being lifted through the air by a gigantic bat.");
+                player.setCaveNum(caveSystem1.generatePlayerCave(randomiser));
+                System.out.println("Now, you are in cave" + player.getCaveNum());
+                System.out.println(checkForSenses(player.getCaveNum(), caveSystem1));
+                break;
+
+            case FALL:
+                System.out.println("You lose your footing and fall into an endless pit! The End.");
+                System.exit(0);
+                break;
+
+            case WUMPUS:
+                System.out.println("You walk into the cave and come to the horrible realisation that the wumpus stirs astride you. Hunger in it's snake-like eyes, it pounces."); 
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static String checkForSenses(int caveNum, CaveSystem caveSystem) {
+        
+        String printStr = "";
         HashSet<Integer> nearbyCaves = caveSystem.getNearbyCaves(caveNum);
         for (int cave : nearbyCaves) {
             if (caveSystem.getWumpLocation().contains(cave)) {
-                System.out.println("smell");
+                printStr += ("The foul stench of the wumpus accosts your nose. You wish you had a set of earplugs to shove in your nostrils.\n");
                 break;
             } 
         }
         
         for (int cave : nearbyCaves) {
             if (caveSystem.getBatLocation().contains(cave)){
-                System.out.println("flap");
+                printStr += ("You hear an indistinct sound. Wait, is it-? \nYes, you hear bats.\n");
                 break;
             }
         } 
         
         for (int cave : nearbyCaves) {
             if (caveSystem.getPitLocation().contains(cave)) {
-                System.out.println("breeze");
+                printStr += ("You feel a breeze. It makes you crave hot cocoa and marshmallows.\n");
                 break;
             }
         }
-    }
 
-    public static void shootWump(CaveSystem caveSystem, Player player) {
-
-        System.out.printf("You can shoot into the caves: ");
-        for (int adjCave : caveSystem.getLayoutMap().get(player.getCaveNum())) {
-            System.out.printf("%d ", adjCave);
-        }
-
-        int caveShotAt = inputReader.nextInt();
-        if (caveSystem.wumpDeath(caveShotAt)) {
-            System.out.println("wump ded");
-            if (caveSystem.getWumpLocation().size() == 0) {
-                System.out.println("gaem end.");
-            } else {
-                System.out.printf("$d wump rem", caveSystem.getWumpLocation().size());
-            }
-            
-        } else {
-            System.out.println("wump no poke");
-            for (int cave : caveSystem.getNearbyCaves(caveShotAt)) {
-                if (caveSystem.getWumpLocation().contains(cave)) {
-                    System.out.println("wump move");
-                    caveSystem.moveWump(cave);
-                    break;
-                } 
-            }
-        }
-
-        System.out.printf("%d Arrows rem", player.getQtyArrows());
-
+        return printStr;
     }
     
+    public static void buttonListener(JButton button1, JButton button2, JButton button3) {        
+        button1.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                caveSystem1 = new CaveSystem(0);
+            }
+            
+        });
+        
+        button2.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                caveSystem1 = new CaveSystem(1);
+            }
+            
+        });
+        
+        button3.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e) {
+                caveSystem1 = new CaveSystem(2);
+                System.out.println("SET TO NIGHTMARE");
+            }
+            
+        });
+    }
+    
+    public static void nightmareMode() {
+        
+        while (true) {
+            //getting action from user
+            System.out.println("What do: move/shoot");
+            String action = inputReader.next();
+            switch (action) {
+                case "move":
+                    //Traversal
+                    player.movePlayer(caveSystem1, inputReader);
+                    doEvent(player);
+                    System.out.println(checkForSenses(player.getCaveNum(), caveSystem1));   
+                    break;
+
+                case "shoot":
+                    //shooting
+                    player.shootWump(caveSystem1, inputReader);
+                    System.out.println("shoot");
+                    break;
+
+                default:
+                    System.out.println("Invalid input, try again.");
+                    break;
+            } 
+        }
+    }
+
 }
