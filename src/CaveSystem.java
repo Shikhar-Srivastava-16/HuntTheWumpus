@@ -104,14 +104,19 @@ public class CaveSystem {
         return layoutMap;
     }
 
-    //Constructor
+    /**
+     * class construtor
+     * @param caveLevel
+     */
     public CaveSystem(int caveLevel) {
 
+        //validate entered level
         if (caveLevel < 0 || caveLevel > 2 ) {
             System.err.println("Invalid level");
             System.exit(1);
         }
 
+        //populate layoutMap
         for (int i = 1; i <= arrayLayout.length; i++) {
             layoutMap.put(i, arrayLayout[i-1]);
         }
@@ -120,16 +125,17 @@ public class CaveSystem {
         int numOfArrows;
         int numOfPits;
         int numOfWumpi;
+        //5 caves with bats in all cases
         int numOfBats = 5;
 
         if (caveLevel == 0) {
-            
+            //easy mode
             numOfArrows = 5;
             numOfPits = 1;
             numOfWumpi = 1;
 
         } else {
-
+            //other modes
             numOfArrows = 3;
             numOfPits = 2;
             numOfWumpi = 2;
@@ -144,10 +150,13 @@ public class CaveSystem {
     }
 
     //methods
+    /**
+     * @param sizeGiven
+     * generates a set of n unique numbers between 1 and 20
+     * used for pits and for arrow drops
+    */
     public static HashSet<Integer> generateSet(int sizeGiven) {  
-        //generates a set of n unique numbers between 1 and 20
-        //used for pits and for arrow drops
-        
+
         Random numberGenerator = new Random();
         HashSet<Integer> set1 = new HashSet<>();
         while (set1.size() < sizeGiven) {
@@ -156,7 +165,7 @@ public class CaveSystem {
         return set1;
     }
 
-    //overloading generateSet
+    //overloading generateSet to compare with pre-existing set and make sure same spaces are not occupied
     public static HashSet<Integer> generateSet(int sizeGiven, HashSet comparisonSet) {
         Random numberGenerator = new Random();
         HashSet<Integer> set1 = new HashSet<>();
@@ -169,14 +178,19 @@ public class CaveSystem {
         return set1;
     }
     
+    /**
+     * @param random
+     * generates a random cave and checks if it is empty befor returning
+     * @return int
+     */
     public int generatePlayerCave(Random random) {
 
         int returner = 0;
         while (returner == 0) {
             int num = 1 + random.nextInt(20);
-            if (!(getPitLocation().contains(num) 
-            || getArrowLocation().contains(num)
-            || getWumpLocation().contains(num))) {
+            if (!(pitLocation.contains(num) 
+            || arrowLocation.contains(num)
+            || wumpLocation.contains(num))) {
                 returner = num;
             }
         }
@@ -184,6 +198,11 @@ public class CaveSystem {
         return returner;
     }
 
+    /**
+     * @param caveNum
+     * returns a set of all caves that can bereached in two turns from cave stored in caveNum
+     * @return HashSet<Integer>
+     */
     public HashSet<Integer> getNearbyCaves(int caveNum) {
         
         HashSet<Integer> returnSet = new HashSet<>();
@@ -203,6 +222,7 @@ public class CaveSystem {
      * @return Boolean
      */
     public Boolean wumpDeath(int caveShotAt) {
+        //HashSet.return returs true if there is an element to remove while also removing the element 
         if (wumpLocation.remove(caveShotAt)) {
             return true;
         }
@@ -211,6 +231,10 @@ public class CaveSystem {
         }
     }
 
+    /**
+     * @param wumpusCave
+     * moves the wumpus into another empty cave.
+     */
     public void moveWump(int wumpusCave) {
 
         wumpLocation.remove(wumpusCave);

@@ -44,6 +44,10 @@ public class Main {
         }
     }
     
+    /**
+     * @return Event
+     * returns an event enum for the currently player occupied cave
+     */
     public static Event checkForEvent() {
         
         int playerLocation = player.getCaveNum();
@@ -66,6 +70,10 @@ public class Main {
         }
     }
 
+    /**
+     * @param event
+     * accept an Event enum as parameter and prints a string based on the enum. 
+     */
     public static void doEvent (Event event) {
 
         switch (event) {
@@ -98,6 +106,10 @@ public class Main {
         }
     }
 
+     /**
+      * @return String
+      * checks if the current location of the player wouldcauseany sense (breeze, smell wumpus, flapping sound)
+      */
     public static String checkForSenses() {
         
         String printStr = "";
@@ -126,6 +138,9 @@ public class Main {
         return printStr;
     }
     
+    /**
+     * runs code necessary for running machine from nightmare mode
+     */
     public static void nightmareMode() {
         
         //give mode to player
