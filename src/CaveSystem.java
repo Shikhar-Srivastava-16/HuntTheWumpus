@@ -55,30 +55,51 @@ public class CaveSystem {
     private Random random = new Random();
     
     //getters
+    /** 
+     * @return int
+     */
     public int getCaveLevel() {
         return caveLevel;
     }
 
+    /** 
+     * @return arrowLocation
+     */
     public HashSet getArrowLocation() {
         return arrowLocation;
     }
-
+    
+    /** 
+     * @return HashSet
+     */
     public HashSet getBatLocation() {
         return batLocation;
     }
 
+    /** 
+     * @return HashSet
+     */
     public HashSet getPitLocation() {
         return pitLocation;
     }
 
+    /** 
+     * @return HashSet
+     */
     public HashSet getWumpLocation() {
         return wumpLocation;
     }
 
+    /** 
+     * @return int[][]
+     */
     public static int[][] getArrayLayout() {
         return arrayLayout;
     }
     
+    /** 
+     * @return HashMap<Integer, int[]>
+    */
     public HashMap<Integer, int[]> getLayoutMap() {
         return layoutMap;
     }
@@ -104,13 +125,13 @@ public class CaveSystem {
         if (caveLevel == 0) {
             
             numOfArrows = 5;
-            numOfPits = 3;
+            numOfPits = 1;
             numOfWumpi = 1;
 
         } else {
 
             numOfArrows = 3;
-            numOfPits = 5;
+            numOfPits = 2;
             numOfWumpi = 2;
         
         }
@@ -147,7 +168,7 @@ public class CaveSystem {
         }
         return set1;
     }
-
+    
     public int generatePlayerCave(Random random) {
 
         int returner = 0;
@@ -177,6 +198,10 @@ public class CaveSystem {
         return returnSet;
     }
 
+    /** 
+     * @param caveShotAt
+     * @return Boolean
+     */
     public Boolean wumpDeath(int caveShotAt) {
         if (wumpLocation.remove(caveShotAt)) {
             return true;
